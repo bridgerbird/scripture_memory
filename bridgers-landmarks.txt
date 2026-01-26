@@ -1,0 +1,35 @@
+[
+    {
+        "entry":0,
+        "date":"1/1/26",
+        "rating":5,
+        "rating_history":[
+            4,
+            5
+        ],
+        "notes":"",
+        "verse_titles":[
+            "1 Nephi 1:1"
+        ],
+        "marked_text":"",
+        "chunks":[
+
+        ]
+    },
+        {
+        "entry":1,
+        "date":"1/12/26",
+        "rating":3,
+        "rating_history":[
+            3
+        ],
+        "notes":"test note",
+        "verse_titles":[
+            "1 Nephi 11:25"
+        ],
+        "marked_text":"",
+        "chunks":[
+            
+        ]
+    }
+]
