@@ -70,7 +70,7 @@ def main():
     landmark_verses = add(marked_verse_2, landmark_verses)
     # if temp_scripture["marked_text"] != scriptures[text], add '...' in appropriate places
 
-
+    save(landmark_verses, 'bridgers-landmarks.txt')
 
 
     temp_scripture = landmark_verses[0]
