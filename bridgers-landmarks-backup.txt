@@ -35,7 +35,7 @@
                     "But behold, I, Nephi, will show unto you that the tender mercies of the Lord are over all those whom he hath chosen,",
                     "because of their faith, to make them mighty even unto the power of deliverance."
                 ]
-            },
+            }
         ]
     },
     {
