@@ -1,10 +1,45 @@
 # lds-scriptures-json.txt comes from Nephi.org
 import json
+import uuid
+from datetime import date
 
 def load_scriptures(file):
     """Return a scriptures object from the included file"""
     with open(file, 'r', encoding='utf-8') as f:
         return json.load(f)
+
+def load_memorize_list(file):
+    """Return a memorize list object from the included file"""
+    try:
+        with open(file, "r", encoding='utf-8') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return [] #Memorize list has nothing added yet
+
+def add(entry, memorize_list):
+    """Adds an entry to a memorize list"""
+    today = date.today().isoformat()
+
+    data = {
+        "id": str(uuid.uuid4()),
+        "date_added": today,
+        "date_started": today,
+        "last_reviewed": today,
+        "mastery_score": 0,
+        "mastery_score_history": [],
+        "notes": "",
+        "verse_titles": entry["verse_titles"],
+        "marked_text": entry["marked_text"],
+        "chunks": []
+    }
+
+    memorize_list.append(data)
+    return memorize_list
+
+def save(memorize_list, file):
+    """Saves the newly added entry to file"""
+    with open(file, "w") as f:
+        json.dump(memorize_list, f, indent=4)
 
 def main():
     """Main driver"""
@@ -12,17 +47,38 @@ def main():
     scriptures = load_scriptures('lds-scriptures-json.txt')
 
     # Load users Landmark Verses
-    landmark_verses = load_scriptures('bridgers-landmarks.txt')
+    landmark_verses = load_memorize_list('bridgers-landmarks.txt')
 
     # ==========================================================
     # TESTING CONCEPTS
+    # add a scripture
+    marked_verse_1 = {
+        "list_name":"landmark_verses",
+        "verse_titles":[
+            "Moroni 10:5"
+        ],
+        "marked_text":"And by the power of the Holy Ghost ye may know the truth of all things.",
+    }
+    marked_verse_2 = {
+        "list_name":"landmark_verses",
+        "verse_titles":[
+            "Moroni 10:5"
+        ],
+        "marked_text":"by the power of the Holy Ghost ye may know the truth of all things.",
+    }
+    landmark_verses = add(marked_verse_1, landmark_verses)
+    landmark_verses = add(marked_verse_2, landmark_verses)
+    # if temp_scripture["marked_text"] != scriptures[text], add '...' in appropriate places
+
+
+
+
     temp_scripture = landmark_verses[0]
     temp_scripture["text_alterations"] = {
         "every_other":None,
         "first_three":None
     }
 
-    # if temp_scripture["marked_text"] != scriptures[text], add '...' in appropriate places
 
     # Take the text and save some different options
     words = temp_scripture["marked_text"].split()
