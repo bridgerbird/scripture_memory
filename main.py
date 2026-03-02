@@ -44,10 +44,10 @@ def save(memorize_list, file):
 def main():
     """Main driver"""
     # Load the canon scriptures
-    scriptures = load_scriptures('lds-scriptures-json.txt')
+    scriptures = load_scriptures('data/lds-scriptures-canon.json')
 
     # Load users Landmark Verses
-    landmark_verses = load_memorize_list('bridgers-landmarks.txt')
+    landmark_verses = load_memorize_list('data/user-lists/bridgers-landmarks.json')
 
     # ==========================================================
     # TESTING CONCEPTS
@@ -68,11 +68,12 @@ def main():
     }
     landmark_verses = add(marked_verse_1, landmark_verses)
     landmark_verses = add(marked_verse_2, landmark_verses)
-    # if temp_scripture["marked_text"] != scriptures[text], add '...' in appropriate places
+    # FIXME if temp_scripture["marked_text"] != scriptures[text], add '...' in appropriate places
 
-    save(landmark_verses, 'bridgers-landmarks.txt')
+    save(landmark_verses, 'bridgers-landmarks.json')
 
-
+    # TESTING CONCEPTS
+    # create chunk defaults
     temp_scripture = landmark_verses[0]
     temp_scripture["text_alterations"] = {
         "every_other":None,

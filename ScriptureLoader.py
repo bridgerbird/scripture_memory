@@ -1,0 +1,1 @@
+"""Loads the Scriptures in the App"""
