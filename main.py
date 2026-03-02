@@ -1,42 +1,40 @@
 # lds-scriptures-json.txt comes from Nephi.org
-import json
-import uuid
-from datetime import date
 
 from ScriptureLoader import ScriptureLoader
+from MemorizeList import MemorizeList
 
-def load_memorize_list(file):
-    """Return a memorize list object from the included file"""
-    try:
-        with open(file, "r", encoding='utf-8') as f:
-            return json.load(f)
-    except FileNotFoundError:
-        return [] #Memorize list has nothing added yet
+# def load_memorize_list(file):
+#     """Return a memorize list object from the included file"""
+#     try:
+#         with open(file, "r", encoding='utf-8') as f:
+#             return json.load(f)
+#     except FileNotFoundError:
+#         return [] #Memorize list has nothing added yet
 
-def add(entry, memorize_list):
-    """Adds an entry to a memorize list"""
-    today = date.today().isoformat()
+# def add(entry, memorize_list):
+#     """Adds an entry to a memorize list"""
+#     today = date.today().isoformat()
 
-    data = {
-        "id": str(uuid.uuid4()),
-        "date_added": today,
-        "date_started": today,
-        "last_reviewed": today,
-        "mastery_score": 0,
-        "mastery_score_history": [],
-        "notes": "",
-        "verse_titles": entry["verse_titles"],
-        "marked_text": entry["marked_text"],
-        "chunks": []
-    }
+#     data = {
+#         "id": str(uuid.uuid4()),
+#         "date_added": today,
+#         "date_started": today,
+#         "last_reviewed": today,
+#         "mastery_score": 0,
+#         "mastery_score_history": [],
+#         "notes": "",
+#         "verse_titles": entry["verse_titles"],
+#         "marked_text": entry["marked_text"],
+#         "chunks": []
+#     }
 
-    memorize_list.append(data)
-    return memorize_list
+#     memorize_list.append(data)
+#     return memorize_list
 
-def save(memorize_list, file):
-    """Saves the newly added entry to file"""
-    with open(file, "w") as f:
-        json.dump(memorize_list, f, indent=4)
+# def save(memorize_list, file):
+#     """Saves the newly added entry to file"""
+#     with open(file, "w") as f:
+#         json.dump(memorize_list, f, indent=4)
 
 def main():
     """Main driver"""
@@ -46,7 +44,7 @@ def main():
     example_verse = scriptures.get_verse("1 Nephi 3:7")
 
     # Load users Landmark Verses
-    landmark_verses = load_memorize_list('data/user-lists/bridgers-landmarks.json')
+    landmark_verses = MemorizeList("bridgers_landmarks", "data/user-lists/bridgers-landmarks.json")
 
     # ==========================================================
     # TESTING CONCEPTS
@@ -54,19 +52,14 @@ def main():
     marked_verse_1 = {
         "list_name":"landmark_verses",
         "verse_titles":[
-            "Moroni 10:5"
+            "2 Nephi 2:25"
         ],
-        "marked_text":"And by the power of the Holy Ghost ye may know the truth of all things.",
+        "marked_text":"Adam fell that men might be; and men are, that they might have joy.",
     }
-    marked_verse_2 = {
-        "list_name":"landmark_verses",
-        "verse_titles":[
-            "Moroni 10:5"
-        ],
-        "marked_text":"by the power of the Holy Ghost ye may know the truth of all things.",
-    }
-    landmark_verses = add(marked_verse_1, landmark_verses)
-    landmark_verses = add(marked_verse_2, landmark_verses)
+
+    landmark_verses.add(marked_verse_1)
+    landmark_verses.save()
+    print()
     # FIXME if temp_scripture["marked_text"] != scriptures[text], add '...' in appropriate places
 
     # save(landmark_verses, 'bridgers-landmarks.json')
