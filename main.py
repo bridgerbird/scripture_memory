@@ -42,6 +42,8 @@ def main():
     """Main driver"""
     # Load the canon scriptures
     scriptures = ScriptureLoader()
+    # Examples of using ScriptureLoader()
+    example_verse = scriptures.get_verse("1 Nephi 3:7")
 
     # Load users Landmark Verses
     landmark_verses = load_memorize_list('data/user-lists/bridgers-landmarks.json')

@@ -11,3 +11,7 @@ class ScriptureLoader:
         self._scriptures = data
         # Dictionary index for fast lookups by verse title
         self._index = {verse["verse_title"]: verse for verse in data}
+
+    def get_verse(self, title: str) -> dict | None:
+        """Look up a verse by its scriptural reference, e.g. '1 Nephi 3:7' """
+        return self._index.get(title)
