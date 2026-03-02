@@ -3,10 +3,7 @@ import json
 import uuid
 from datetime import date
 
-def load_scriptures(file):
-    """Return a scriptures object from the included file"""
-    with open(file, 'r', encoding='utf-8') as f:
-        return json.load(f)
+from ScriptureLoader import ScriptureLoader
 
 def load_memorize_list(file):
     """Return a memorize list object from the included file"""
@@ -44,7 +41,7 @@ def save(memorize_list, file):
 def main():
     """Main driver"""
     # Load the canon scriptures
-    scriptures = load_scriptures('data/lds-scriptures-canon.json')
+    scriptures = ScriptureLoader()
 
     # Load users Landmark Verses
     landmark_verses = load_memorize_list('data/user-lists/bridgers-landmarks.json')
@@ -70,7 +67,7 @@ def main():
     landmark_verses = add(marked_verse_2, landmark_verses)
     # FIXME if temp_scripture["marked_text"] != scriptures[text], add '...' in appropriate places
 
-    save(landmark_verses, 'bridgers-landmarks.json')
+    # save(landmark_verses, 'bridgers-landmarks.json')
 
     # TESTING CONCEPTS
     # create chunk defaults
