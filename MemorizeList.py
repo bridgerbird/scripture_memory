@@ -49,13 +49,26 @@ class MemorizeList:
 
         self.entries.append(data)
 
-    def remove(self, id):
-        # removes entry by id
-        pass
+    def remove(self, entry_id: str) -> bool:
+        """Removes an entry by id
+           Returns True if found and removed, False if id not found."""
+        original_count = len(self.entries)
+        self.entries = [e for e in self.entries if e["id"] != entry_id]
+        return len(self.entries) < original_count
 
-    def get_entry(self, id):
-        # returns a single entry
-        pass
+    def get_entry(self, entry_id: str) -> dict | None:
+        """Returns a single entry found by id"""
+        for entry in self.entries:
+            if entry["id"] == entry_id:
+                return entry
+        return None
+
+    def get_entry_by_verse(self, verse_title: str) -> dict | None:
+        """Find an entry by verse"""
+        for entry in self.entries:
+            if verse_title in entry["verse_titles"]:
+                return entry
+        return None
 
     def update_entry(self, id, changes):
         # edits fields on an existing entry

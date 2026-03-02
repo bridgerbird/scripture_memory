@@ -3,39 +3,6 @@
 from ScriptureLoader import ScriptureLoader
 from MemorizeList import MemorizeList
 
-# def load_memorize_list(file):
-#     """Return a memorize list object from the included file"""
-#     try:
-#         with open(file, "r", encoding='utf-8') as f:
-#             return json.load(f)
-#     except FileNotFoundError:
-#         return [] #Memorize list has nothing added yet
-
-# def add(entry, memorize_list):
-#     """Adds an entry to a memorize list"""
-#     today = date.today().isoformat()
-
-#     data = {
-#         "id": str(uuid.uuid4()),
-#         "date_added": today,
-#         "date_started": today,
-#         "last_reviewed": today,
-#         "mastery_score": 0,
-#         "mastery_score_history": [],
-#         "notes": "",
-#         "verse_titles": entry["verse_titles"],
-#         "marked_text": entry["marked_text"],
-#         "chunks": []
-#     }
-
-#     memorize_list.append(data)
-#     return memorize_list
-
-# def save(memorize_list, file):
-#     """Saves the newly added entry to file"""
-#     with open(file, "w") as f:
-#         json.dump(memorize_list, f, indent=4)
-
 def main():
     """Main driver"""
     # Load the canon scriptures
@@ -59,10 +26,11 @@ def main():
 
     landmark_verses.add(marked_verse_1)
     landmark_verses.save()
-    print()
+    to_delete = landmark_verses.get_entry_by_verse("2 Nephi 2:25")
+    landmark_verses.remove(to_delete["id"])
+    landmark_verses.save()
     # FIXME if temp_scripture["marked_text"] != scriptures[text], add '...' in appropriate places
 
-    # save(landmark_verses, 'bridgers-landmarks.json')
 
     # TESTING CONCEPTS
     # create chunk defaults
