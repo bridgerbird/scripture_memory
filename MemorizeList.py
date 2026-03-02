@@ -70,6 +70,41 @@ class MemorizeList:
                 return entry
         return None
 
-    def update_entry(self, id, changes):
-        # edits fields on an existing entry
-        pass
+    def update_entry(self, entry_id: str, changes: dict) -> bool:
+        """Edits fields on an existing entry"""
+        protected_fields = {"id", "date_added"}
+        entry = self.get_entry(entry_id)
+        if entry is None:
+            return False
+        for key, value in changes.items():
+            if key not in protected_fields:
+                entry[key] = value
+        return True
+
+    def record_review(self, entry_id: str, mastery_score: int) -> bool:
+        """Record review session, updating mastery_score, mastery_score_history, and last_reveiew"""
+        entry = self.get_entry(entry_id)
+        if entry is None:
+            return False
+        entry["mastery_score"] = mastery_score
+        entry["mastery_score_history"].append(mastery_score)
+        entry["last_reviewed"] = date.today().isoformat()
+        return True
+
+    def update_chunks(self, entry_id: str, chunks: list) -> bool:
+        """Replace entry chunks with an updated chunks list"""
+        entry = self.get_entry(entry_id)
+        if entry is None:
+            return False
+        entry["chunks"] = chunks
+        return True
+
+    #-------------------------------------
+    # Utility
+    #-------------------------------------
+    def __len__(self) -> int:
+        """Return the number of entries"""
+        return len(self.entries)
+
+    def __repr__(self) -> str:
+        return f"MemorizeList(name={self.name!r}, entries={len(self.entries)})"

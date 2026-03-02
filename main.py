@@ -23,9 +23,44 @@ def main():
         ],
         "marked_text":"Adam fell that men might be; and men are, that they might have joy.",
     }
-
     landmark_verses.add(marked_verse_1)
     landmark_verses.save()
+
+    # variable to test class functions with
+    verse_entry = landmark_verses.get_entry_by_verse("2 Nephi 2:25")
+
+    # write a note and change the date_started
+    changes = {"notes":"This one came easily"}
+    changes["date_started"] = "2026-02-25" #started in class without the app
+    changes["date_added"] = "2001-04-25" #testing protected fields
+    landmark_verses.update_entry(verse_entry["id"], changes)
+    landmark_verses.save()
+
+    # record a review
+    review_score = 5
+    landmark_verses.record_review(verse_entry["id"],review_score)
+    landmark_verses.save()
+
+    # add first chunks
+    chunks = [
+        {
+            "title":"Phrases",
+            "chunk_list":[
+                "Adam fell that men might be;",
+                "and men are, that they might have joy."
+            ]
+        }
+    ]
+    chunks.append({
+        "title":"Test",
+        "chunk_list":[
+            "Adam fell that"
+        ]
+    })
+    landmark_verses.update_chunks(verse_entry["id"],chunks)
+    landmark_verses.save()
+
+    # delete a scripture
     to_delete = landmark_verses.get_entry_by_verse("2 Nephi 2:25")
     landmark_verses.remove(to_delete["id"])
     landmark_verses.save()
@@ -34,12 +69,11 @@ def main():
 
     # TESTING CONCEPTS
     # create chunk defaults
-    temp_scripture = landmark_verses[0]
+    temp_scripture = landmark_verses.get_entry_by_verse("1 Nephi 1:20")
     temp_scripture["text_alterations"] = {
         "every_other":None,
         "first_three":None
     }
-
 
     # Take the text and save some different options
     words = temp_scripture["marked_text"].split()
